@@ -98,7 +98,7 @@ class mysql::server::base {
   exec { "Initialize MySQL server root password":
     unless      => "test -f /root/.my.cnf",
     command     => "mysqladmin -u${mysql_user} password ${mysql_password}",
-    notify      => Exec["Generate my.cnf"],
+    #notify      => Exec["Generate my.cnf"],
     require     => [Package["mysql-server"], Service["mysql"]]
   }
 
