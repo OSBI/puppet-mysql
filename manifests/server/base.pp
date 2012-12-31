@@ -88,6 +88,8 @@ class mysql::server::base {
       owner => root,
       group => root,
       mode  => 600,
+      content => template("mysql/my.cnf.erb"),
+      replace => false,
       require => Exec["Initialize MySQL server root password"],
     }
 
@@ -100,11 +102,11 @@ class mysql::server::base {
     require     => [Package["mysql-server"], Service["mysql"]]
   }
 
-  exec { "Generate my.cnf":
-    command     => "/bin/echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqlshow]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
-    refreshonly => true,
-    creates     => "/root/.my.cnf",
-  }
+#  exec { "Generate my.cnf":
+#    command     => "/bin/echo -e \"[mysql]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqladmin]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqldump]\nuser=${mysql_user}\npassword=${mysql_password}\n[mysqlshow]\nuser=${mysql_user}\npassword=${mysql_password}\n\" > /root/.my.cnf",
+#    refreshonly => true,
+#    creates     => "/root/.my.cnf",
+#  }
 
   $logfile_group = $mysql::params::logfile_group
 
