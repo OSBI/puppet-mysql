@@ -42,6 +42,12 @@ class mysql::server::base {
       command => 'cp -rfp /var/lib/mysql/* /mnt/mysql/',
       creates => '/mnt/mysql/debian-5.5.flag',
     }
+    
+    file{"/etc/apparmor.d/usr.sbin.mysqld":
+      ensure => present,
+      content => template("mysql/usr.sbin.mysqld.erb"),    
+      notify  => Service["apparmor"],
+    }
   }
 
   file { "/etc/mysql/my.cnf":
