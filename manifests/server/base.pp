@@ -33,10 +33,14 @@ class mysql::server::base {
   }
 
   if( "${mysql::params::data_dir}" != "/var/lib/mysql" ) {
-    File["${mysql::params::data_dir}"]{
-      source  => "/var/lib/mysql",
-      recurse => true,
-      replace => false,
+#    File["${mysql::params::data_dir}"]{
+#      source  => "/var/lib/mysql",
+#      recurse => true,
+#      replace => false,
+#    }
+    exec{ "copy mysql files":
+      command => 'cp -rfp /var/lib/mysql/* /mnt/mysql/*',
+      creates => '/mnt/mysql/debian-5.5.flag',
     }
   }
 
