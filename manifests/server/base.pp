@@ -39,7 +39,7 @@ class mysql::server::base {
 #      replace => false,
 #    }
     exec{ "copy mysql files":
-      command => 'cp -rfp /var/lib/mysql/* /mnt/mysql/*',
+      command => 'cp -rfp /var/lib/mysql/* /mnt/mysql/',
       creates => '/mnt/mysql/debian-5.5.flag',
     }
   }
